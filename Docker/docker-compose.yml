@@ -35,7 +35,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: ${PROJECT_NAME}_db
+      MYSQL_DATABASE: ${PROJECT_NAME}
     ports:
       - 3305:3306
     volumes:
