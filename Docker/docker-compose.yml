@@ -34,7 +34,7 @@ services:
     image: mysql:5.7.22
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: ${PROJECT_NAME}_db
     ports:
       - 3305:3306
