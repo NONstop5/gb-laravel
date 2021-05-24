@@ -1,5 +1,7 @@
-@extends('base')
+@extends('layouts.layout')
+
+@section('title', 'Index page')
 
 @section('content')
-    Index content
+    <h1>Страница приветствия!</h1>
 @endsection

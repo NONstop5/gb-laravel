@@ -1,4 +1,6 @@
-@extends('base')
+@extends('layouts.layout')
+
+@section('title', 'News')
 
 @section('content')
     Add news

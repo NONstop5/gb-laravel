@@ -1,5 +1,7 @@
-@extends('base')
+@extends('layouts.layout')
+
+@section('title', 'News')
 
 @section('content')
-    News content
+    News item content
 @endsection
