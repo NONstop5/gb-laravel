@@ -21,10 +21,16 @@ Route::get('/', [IndexController::class, 'index'])->name('index');
 
 Route::get('/login', [UserController::class, 'index'])->name('user.login');
 
-Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+Route::prefix('category')->group(function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/{categoryId}', [NewsController::class, 'index'])->name('news.list');
 
-Route::prefix('news')->group(function () {
-    Route::get('/', [NewsController::class, 'index'])->name('news.index');
-    Route::get('/{id}', [NewsController::class, 'show'])->name('news.show')->where('id', '[0-9]+');
-    Route::get('/add', [NewsController::class, 'add'])->name('news.add');
+    Route::prefix('{categoryId}/news')->group(function () {
+        Route::get('/{id}', [NewsController::class, 'show'])->name('news.show')->where('id', '[0-9]+');
+        Route::get('/add', [NewsController::class, 'add'])->name('news.add');
+    });
 });
+
+Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
