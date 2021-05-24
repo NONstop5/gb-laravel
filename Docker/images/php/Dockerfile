@@ -6,6 +6,8 @@ ENV DEBIAN_FRONTEND noninteractive
 #COPY bin/* /usr/local/bin/
 #RUN chmod -R 700 /usr/local/bin/
 
+USER root
+
 # Locales
 RUN apt-get update \
     && apt-get install -y locales
@@ -116,9 +118,12 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 # Добавим свой php.ini, можем в нем определять свои значения конфига
 ADD php.ini /usr/local/etc/php/conf.d/40-custom.ini
 
+RUN usermod -u 1000 www-data
+USER www-data
+
 # Указываем рабочую директорию для PHP
 WORKDIR /var/www
-RUN chown -R www-data:www-data /var/www
+#RUN chown -R www-data:www-data /var/www
 #RUN chmod -R 755 ../storage
 # Запускаем контейнер
 # Из документации: The main purpose of a CMD is to provide defaults for an executing container. These defaults can include an executable,

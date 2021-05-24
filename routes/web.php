@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,14 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [IndexController::class, 'index'])->name('index');
+
+Route::get('/login', [UserController::class, 'index'])->name('user.login');
+
+Route::prefix('category')->group(function () {
+    Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/{categoryId}', [NewsController::class, 'index'])->name('news.list');
+
+    Route::prefix('{categoryId}/news')->group(function () {
+        Route::get('/{id}', [NewsController::class, 'show'])->name('news.show')->where('id', '[0-9]+');
+        Route::get('/add', [NewsController::class, 'add'])->name('news.add');
+    });
 });
 
-Route::get('/news', function () {
-    return 'News';
-});
+Auth::routes();
 
-Route::get('/category', function () {
-    return 'Category';
-});
+// Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
